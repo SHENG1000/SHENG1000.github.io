@@ -3,8 +3,6 @@
  * custom by hexo-theme-yun @YunYouJun
  */
 
-/* global anime */
-
 /**
  * 创建烟花
  * @typedef {{min: number, max: number}} MinMax
@@ -79,12 +77,6 @@ function createFireworks(
     };
   }
 
-  /**
-   * 在指定位置创建粒子
-   * @param {number} x
-   * @param {number} y
-   * @returns
-   */
   function createParticule(x, y) {
     let p = {};
     p.x = x;
@@ -174,27 +166,28 @@ function createFireworks(
       );
   }
 
-  const render = anime({
-    duration: Infinity,
-    update: () => {
-      ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
-    },
-  });
+  document.addEventListener("DOMContentLoaded", () => {
+    /* global anime */
+    const render = anime({
+      duration: Infinity,
+      update: () => {
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+      },
+    });
 
-  document.addEventListener(
-    "mousedown",
-    (e) => {
-      render.play();
-      updateCoords(e);
-      animateParticules(pointerX, pointerY);
-    },
-    false
-  );
+    document.addEventListener(
+      "mousedown",
+      (e) => {
+        render.play();
+        updateCoords(e);
+        animateParticules(pointerX, pointerY);
+      },
+      false
+    );
+  });
 
   setCanvasSize(canvasEl);
   window.addEventListener("resize", setCanvasSize(canvasEl), false);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  createFireworks();
-});
+document.addEventListener("DOMContentLoaded", createFireworks);
